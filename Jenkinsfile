@@ -8,12 +8,12 @@ node {
 		git branch: 'master', credentialsId: 'Iv1.dfc743b8e4495c13', url: 'https://github.com/MuslumGuzel/sonar-test'
 	}
 	stage 'Build'
-		bat "nuget restore \"${workspace}/SonarTest.sln\""
-		bat "\"C:/Program Files/dotnet/dotnet.exe\" restore \"${workspace}/SonarTest.sln\""
-		bat "\"C:/Program Files/dotnet/dotnet.exe\" build \"${workspace}/SonarTest.sln\""
+		bat "nuget restore \"${workspace}/SonarTest/SonarTest.csproj\""
+		bat "\"C:/Program Files/dotnet/dotnet.exe\" restore \"${workspace}/SonarTest/SonarTest.csproj\""
+		bat "\"C:/Program Files/dotnet/dotnet.exe\" build \"${workspace}/SonarTest/SonarTest.csproj\""
 
 	stage 'UnitTests'
-		bat returnStatus: true, script: "\"C:/Program Files/dotnet/dotnet.exe\" test \"${workspace}/SonarTest.sln\" --logger \"trx;LogFileName=unit_tests.xml\" --no-build"
+		bat returnStatus: true, script: "\"C:/Program Files/dotnet/dotnet.exe\" test \"${workspace}/SonarTest.Test/SonarTest.Test.csproj\" --logger \"trx;LogFileName=unit_tests.xml\" --no-build"
 		step([$class: 'MSTestPublisher', testResultsFile:"**/unit_tests.xml", failOnError: true, keepLongStdio: true])
 		
 }
